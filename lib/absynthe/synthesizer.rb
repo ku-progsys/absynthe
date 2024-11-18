@@ -53,7 +53,7 @@ def synthesize(ctx, spec, q)
           score = ctx.score.call(prog)
           size = ProgSizePass.prog_size(prog)
           # line 15
-          q.push(prog, score) if size <= ctx.max_size
+          q.insort_left(prog, score) if size <= ctx.max_size
         else
           Instrumentation.eliminated += 1
         end

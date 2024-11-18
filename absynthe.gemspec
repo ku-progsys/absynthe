@@ -34,5 +34,4 @@ Gem::Specification.new do |spec|
   spec.add_dependency "minitest"
   spec.add_dependency "sxp"
   spec.add_dependency "parser"
-  spec.add_dependency "priority_queue_cxx"
 end

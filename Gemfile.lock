@@ -21,7 +21,6 @@ PATH
     absynthe (0.1.0)
       minitest
       parser
-      priority_queue_cxx
       rake
       sxp
 
@@ -45,7 +44,6 @@ GEM
       ruby-progressbar
     parser (2.7.2.0)
       ast (~> 2.4.1)
-    priority_queue_cxx (0.3.6)
     pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)

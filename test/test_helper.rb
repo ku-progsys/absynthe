@@ -5,7 +5,6 @@ require "absynthe/sygus"
 require "minitest/autorun"
 require "minitest/reporters"
 require "sxp"
-require "fc"
 require "timeout"
 require "json"
 
@@ -54,8 +53,8 @@ module SygusTestRunner
         end
         seed ||= s(:hole, :Start, ctx.goal)
         # seed = s(:hole, :Start, ctx.goal)
-        q = FastContainers::PriorityQueue.new(:min)
-        q.push(seed, ProgSizePass.prog_size(seed))
+        q = SortedList.new
+        q.insort_left(seed, ProgSizePass.prog_size(seed))
         Timeout::timeout(10 * 60) do
           prog = synthesize(ctx, spec, q)
           Instrumentation.size = ProgSizePass.prog_size(prog)
