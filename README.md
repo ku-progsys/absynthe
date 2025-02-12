@@ -9,7 +9,11 @@ Absynthe can also be installed on a local system outside the artifact environmen
 * Make Ruby 3.1.2 the global Ruby: `rbenv global 3.1.2`
 * Install bundler: `gem install bundler -v 2.3.22`
 * Enter the provided `absynthe` directory and install all dependencies: `bundle install`
-* Install Python dependencies for AutoPandas benchmarks: `pip3 install numpy scipy matplotlib plumbum pandas pygments`
+* Install `pyenv` using the instructions [here](https://github.com/pyenv/pyenv).
+* Once `pyenv` is setup, install Python 3.11.11: `pyenv install 3.11.11`
+* Make Python 3.11.11 the global Python: `pyenv global 3.11.11`
+* Create a Python virtual environment in the `venv` directory and activate it: `python3 -m venv venv && source venv/bin/activate`
+* Install Python dependencies for AutoPandas benchmarks: `pip3 install numpy==1.26.4 scipy matplotlib plumbum pandas==1.5.3 pygments`
 
 This will produce a working setup for Absynthe on a local system. All commands to reproduce Absynthe results should work.
 
