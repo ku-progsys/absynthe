@@ -91,6 +91,10 @@ class ProductDomain < AbstractDomain
     end
   end
 
+  def hash
+    @variant.hash
+  end
+
   def self.replace_dep_hole!(name, args)
     # TODO: project args array into each base domain, apply replace_dep_hole!
     # for each base domain and then combine these back to the product domain
