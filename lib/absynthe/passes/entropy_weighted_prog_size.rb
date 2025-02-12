@@ -5,10 +5,10 @@ require 'ast'
 # of arguments are ranked earlier if uses weighted program size, than having
 # more methods with total same number of AST nodes
 
-class WeightedSizePass < ::AST::Processor
+class EntropyWeightedSizePass < ::AST::Processor
 
   def self.prog_size(node)
-    visitor = WeightedSizePass.new
+    visitor = EntropyWeightedSizePass.new
     visitor.process(node)
     visitor.size
   end
