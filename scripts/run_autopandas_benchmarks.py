@@ -31,7 +31,6 @@ BENCH_ORDER = [
  'SO_13647222_depth1',
  'SO_18172851_depth1',
  'SO_49583055_depth1',
- 'SO_49583055_depth1',
  'SO_49592930_depth1',
  'SO_49572546_depth1',
  'SO_12860421_depth1',

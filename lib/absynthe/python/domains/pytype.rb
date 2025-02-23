@@ -100,10 +100,6 @@ class PyType < AbstractDomain
     raise AbsyntheError, "unimplemented"
   end
 
-  def hash
-    @variant.hash
-  end
-
   def to_s
     if top?
       "⊤"

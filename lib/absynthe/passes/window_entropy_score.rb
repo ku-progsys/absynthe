@@ -5,31 +5,42 @@ require 'ast'
 # of arguments are ranked earlier if uses weighted program size, than having
 # more methods with total same number of AST nodes
 
-class EntropyWeightedSizePass < ::AST::Processor
+class WindowEntropyScore < ::AST::Processor
 
   def self.prog_size(node)
-    visitor = EntropyWeightedSizePass.new
+    visitor = WindowEntropyScore.new
     visitor.process(node)
     visitor.size
   end
 
   def size
-    total = @counts.values.sum.to_f
-    ent = @counts.values.map { |v| v / total }
-                  .map { |p| p * Math.log2(p) }
-                  .sum
-    (@size * 1000) + ent
+    (@size * 10) - [entropy, @max_entropy].min
   end
 
   def initialize
-    @counts = {}
+    @toks = []
+    @max_toks = 5
     @size = 0
+    @max_entropy = 0
+  end
+
+  def entropy
+    counts = @toks.group_by(&:itself).transform_values!(&:size)
+    total = counts.values.sum.to_f
+    counts.values.map { |v| v / total }
+                 .map { |p| p * Math.log2(p) }
+                 .sum
+  end
+
+  def add_tok(tok)
+    @max_entropy = [entropy, @max_entropy].min
+    @toks = @toks[1..] if @toks.size == @max_toks
+    @toks << tok
   end
 
   def on_prop(node)
     mth = node.children[1]
-    @counts[mth] = 0 unless @counts.key? mth
-    @counts[mth] += 1
+    add_tok(mth)
 
     @size += 5
     node.children.map { |k|
@@ -40,11 +51,17 @@ class EntropyWeightedSizePass < ::AST::Processor
 
   alias :on_send :on_prop
 
+  def on_const(node)
+    @size += 1
+    konst = node.children[0]
+    add_tok(konst)
+    nil
+  end
+
   def on_hole(node)
     @size += 1
     goal = node.children[1]
-    @counts[goal] = 0 unless @counts.key? goal
-    @counts[goal] += 1
+    add_tok(goal)
     nil
   end
 

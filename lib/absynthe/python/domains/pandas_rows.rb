@@ -63,10 +63,6 @@ class PandasRows < AbstractDomain
     raise AbsyntheError, "unexpected type"
   end
 
-  def hash
-    @variant.hash
-  end
-
   def to_s
     if top?
       "⊤"
