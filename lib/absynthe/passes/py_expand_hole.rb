@@ -28,6 +28,7 @@ class ExpandHolePass < ::AST::Processor
 
     # Holes are filled by looking up the corresponding type definition.
     # Each case is outlined below
+    ty = RDL::Globals.types[:top]
 
     # 1. consts
     # TODO: fix constants

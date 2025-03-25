@@ -1,14 +1,9 @@
 require 'ast'
 
-# Weighted program pass ranks programs by giving higher value to method calls
-# and properties than other AST nodes. Effectively, methods with higher number
-# of arguments are ranked earlier if uses weighted program size, than having
-# more methods with total same number of AST nodes
-
-class WindowEntropyScore < ::AST::Processor
+class SygusWindowEntropyScore < ::AST::Processor
 
   def self.prog_size(node)
-    visitor = WindowEntropyScore.new
+    visitor = SygusWindowEntropyScore.new
     visitor.process(node)
     visitor.size
   end
@@ -38,18 +33,16 @@ class WindowEntropyScore < ::AST::Processor
     @toks << tok
   end
 
-  def on_prop(node)
-    mth = node.children[1]
+  def on_send(node)
+    mth = node.children[0]
     add_tok(mth)
 
-    @size += 5
+    @size += 1
     node.children.map { |k|
       k.is_a?(Parser::AST::Node) ? process(k) : k
     }
     nil
   end
-
-  alias :on_send :on_prop
 
   def on_const(node)
     @size += 1

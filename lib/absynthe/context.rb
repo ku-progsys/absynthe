@@ -10,7 +10,7 @@ class Context
     @lang = :sygus
     @goal = goal
     @cache = {}
-    @score = Proc.new { |prog| ProgSizePass.prog_size(prog) }
+    @score = Proc.new { |prog| SygusWindowEntropyScore.prog_size(prog) }
     @consts = {}
   end
 end
