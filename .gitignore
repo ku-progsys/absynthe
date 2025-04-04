@@ -7,3 +7,6 @@
 /spec/reports/
 /tmp/
 __pycache__/
+scripts/venv
+*.csv
+*.json

@@ -13,6 +13,8 @@ from pygments.formatters import TerminalFormatter
 from protocol import Protocol, handle_action
 
 # List of benchmarks to run in standard mode
+
+
 benches = [
   benchmarks.SO_11881165_depth1(),
   benchmarks.SO_11941492_depth1(),
@@ -44,6 +46,8 @@ benches = [
   benchmarks.SO_23321300_depth3()
 ]
 random.shuffle(benches)
+
+#benches = [benchmarks.SO_14085517_depth1()]
 
 # List of benchmarks to run in --smallbench mode
 smallbenches = [
