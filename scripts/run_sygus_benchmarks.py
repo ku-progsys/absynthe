@@ -14,6 +14,18 @@ parser.add_argument('--times', '-t', dest='times', action='store',
 parser.add_argument('--smallbench', dest='benchtype', action='store_const',
                     const='smallbench', default='bench',
                     help='use the small benchmark suite for data collection')
+parser.add_argument('--window3', dest='benchtype', action='store_const',
+                    const="window3", default="bench",
+                    help='collect_the_different_window_sizes_for_use')
+parser.add_argument('--window9', dest='benchtype', action='store_const',
+                    const="window9", default="bench",
+                    help='collect_the_different_window_sizes_for_use')
+parser.add_argument('--global', dest='benchtype', action='store_const',
+                    const="global", default="bench",
+                    help='collect_the_different_window_sizes_for_use')
+parser.add_argument('--noheuristic', dest='benchtype', action='store_const',
+                    const="noheuristic", default="bench",
+                    help='collect_the_different_window_sizes_for_use')
 
 args = parser.parse_args()
 
