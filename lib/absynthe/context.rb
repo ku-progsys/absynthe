@@ -22,7 +22,10 @@ class Context
               Proc.new { |prog| SygusGlobalEntropyScore.prog_size(prog) }
             when "noheuristic"
               Proc.new { |prog| ProgSizePass.prog_size(prog) }
+            when "pd5"
+              Proc.new { |prog| PythonWindowEntropyScore.prog_size(prog) }
             end
+
 
     @consts = {}
   end

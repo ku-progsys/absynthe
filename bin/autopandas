@@ -190,7 +190,7 @@ def syn_start(data)
       ["arg#{i}".to_sym, ProductDomain.val(arg[0], arg[1])]
     }.to_h
   # abs_env = tyargs.each_with_index.map { |arg, i| ["arg#{i}".to_sym, arg]}.to_h
-  ctx = Context.new(abs_env, ProductDomain.val(PyType.val(fnty.ret), col_out))
+  ctx = Context.new(abs_env, ProductDomain.val(PyType.val(fnty.ret), col_out), "pd5")
   # ctx = Context.new(abs_env, PyType.val(fnty.ret))
   ctx.lang = :py
   ctx.domain = ProductDomain
