@@ -15,7 +15,7 @@ class SygusTest < Minitest::Test
   # res.asserts.push(res.attrs[:val] > 0)
   # run_sygus_test('./sygus-strings/bikes.sl', {:name => name_var},
   #   res)
-
+  
   run_sygus_test('./sygus-strings/bikes.sl', heuristic: "noheuristic")
   run_sygus_test('./sygus-strings/dr-name.sl',
     {:name => StringPrefix.top}, StringPrefix.val("Dr. ", false))

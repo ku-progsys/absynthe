@@ -40,7 +40,7 @@ end
 Rake::TestTask.new(:noheuristic) do |t|
   t.libs << "test"
   t.libs << "lib"
-  t.test_files = FileList["test/**/sygus_bench_noheuristic.rb"]
+  t.test_files = FileList["test/**/sygys_bench_noheuristic.rb"]
 end
 
 task :default => :test
