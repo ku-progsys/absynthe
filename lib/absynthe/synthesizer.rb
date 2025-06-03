@@ -9,6 +9,9 @@ def synthesize(ctx, spec, q)
 
   # line 5
   until q.empty? do
+    #puts"\n\n\n\n--------------------------------------------------------------------------\n"
+    #puts "NEW ROUND length of worklist: #{q.size}"
+    #puts "------------------------------------------\n"
     # line 6
     current = q.top
     q.pop
@@ -32,6 +35,7 @@ def synthesize(ctx, spec, q)
       total_holes = hc_pass.num_holes + hc_pass.num_depholes
       if total_holes > 0
         # if not satisfied by goal abstract value, program is rejected
+        #puts "\n\nINTERPRETING PROGRAM:\n#{prog}\n\n"
         interpreter = AbstractInterpreter.interpreter_from(ctx.domain)
         absval = interpreter.interpret(ctx.init_env, prog)
         # src = Sygus::unparse(prog)

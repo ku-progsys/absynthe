@@ -8,6 +8,8 @@ module Python
     end
 
     def self.interpret(env, node)
+      #puts "\n\n\n\nENVIRONMENT: \n#{env}\n"
+      #puts "NODE:\n#{node}\n"
       case node.type
         # returns the types of constants and variables
       when :const

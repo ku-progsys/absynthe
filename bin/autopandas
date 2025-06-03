@@ -174,6 +174,7 @@ end
 
 # Starts the entire synthesis process with the `data` received from the Python test harness
 def syn_start(data)
+  heuristic = ENV["HEURISTIC"] 
   start_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
   consts = data['consts']
   argsty = data['argsty']
@@ -190,12 +191,26 @@ def syn_start(data)
       ["arg#{i}".to_sym, ProductDomain.val(arg[0], arg[1])]
     }.to_h
   # abs_env = tyargs.each_with_index.map { |arg, i| ["arg#{i}".to_sym, arg]}.to_h
-  ctx = Context.new(abs_env, ProductDomain.val(PyType.val(fnty.ret), col_out), "pd5")
+  ctx = Context.new(abs_env, ProductDomain.val(PyType.val(fnty.ret), col_out), "autopandas")
   # ctx = Context.new(abs_env, PyType.val(fnty.ret))
   ctx.lang = :py
   ctx.domain = ProductDomain
   # ctx.domain = PyType
-  ctx.score = Proc.new { |prog| PythonWindowEntropyScore.prog_size(prog) }
+
+  ctx.score = case heuristic 
+    when  "size" 
+      Proc.new { |prog| WeightedSizePass.prog_size(prog)}
+    when  "global" 
+      Proc.new { |prog| PythonGlobalEntropyScore.prog_size(prog)}
+    when  "window3" 
+      Proc.new { |prog| PythonWindowEntropyScore.prog_size(prog, 3)}
+    when  "window5" 
+      Proc.new { |prog| PythonWindowEntropyScore.prog_size(prog, 5)}
+    when  "window7" 
+      Proc.new { |prog| PythonWindowEntropyScore.prog_size(prog, 7)}
+  end
+
+
   ctx.consts[:int] = consts.filter { |k| k.is_a? Integer }
   ctx.consts[:str] = consts.filter { |k| k.is_a? String }
   ctx.max_size = data['seqs']
@@ -231,6 +246,7 @@ end
 
 # Messages handled by the Ruby IPC protocol
 def handle_action(data)
+
   case data['action']
   when 'start'
     # Requested synthesis start

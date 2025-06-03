@@ -7,8 +7,9 @@ require 'ast'
 
 class PythonWindowEntropyScore < ::AST::Processor
 
-  def self.prog_size(node)
-    visitor = PythonWindowEntropyScore.new
+  def self.prog_size(node, windowsize)
+    
+    visitor = PythonWindowEntropyScore.new(windowsize)
     visitor.process(node)
     visitor.size
   end
@@ -17,9 +18,9 @@ class PythonWindowEntropyScore < ::AST::Processor
     (@size * 10) - [entropy, @max_entropy].min
   end
 
-  def initialize
+  def initialize(windowsize)
     @toks = []
-    @max_toks = 5
+    @max_toks = windowsize
     @size = 0
     @max_entropy = 0
   end

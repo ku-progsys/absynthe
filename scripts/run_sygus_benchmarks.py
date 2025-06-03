@@ -15,26 +15,13 @@ parser.add_argument('--times', '-t', dest='times', action='store',
 parser.add_argument('--smallbench', dest='benchtype', action='store_const',
                     const='smallbench', default='bench',
                     help='use the small benchmark suite for data collection')
-
-parser.add_argument('--window3', dest='benchtype', action='store_const',
-                    const="window3", default="bench",
-                    help='collect_the_different_window_sizes_for_use')
-
-parser.add_argument('--window5', dest='benchtype', action='store_const',
-                    const="bench", default="bench",
-                    help='collect_the_different_window_sizes_for_use')
-
-parser.add_argument('--window9', dest='benchtype', action='store_const',
-                    const="window9", default="bench",
-                    help='collect_the_different_window_sizes_for_use')
-
-parser.add_argument('--global', dest='benchtype', action='store_const',
-                    const="global", default="bench",
-                    help='collect_the_different_window_sizes_for_use')
-
-parser.add_argument('--noheuristic', dest='benchtype', action='store_const',
-                    const="noheuristic", default="bench",
-                    help='collect_the_different_window_sizes_for_use')
+parser.add_argument(
+    '--heuristic',
+    type=str,
+    choices=['size', 'global', 'window3', 'window5', 'window7'],
+    default='window5',
+    help='Choose one of the following options: window5 (default), global, window3, window5, window7.'
+)
 
 args = parser.parse_args()
 
@@ -46,15 +33,17 @@ ABSYNTHE_PATH = '..'
 MY_CWD = os.getcwd()
 JSON_LOG_FILE = 'test_log.json'
 
-def benchmark(**opts):
+def benchmark( **opts):
+
     local.cwd.chdir(ABSYNTHE_PATH)
     bundle.with_env(**opts)['exec', 'rake', str(args.benchtype)] & TF(FG=True)
     local.cwd.chdir(MY_CWD)
 
-def collect(output_file, times, **opts):
+def collect( output_file, times, **opts):
     merged = None
     for i in range(times):
-        benchmark(**opts)
+
+        benchmark( **opts )
         with open(ABSYNTHE_PATH + '/' + JSON_LOG_FILE) as f:
             data = json.load(f)
             if merged is None:
@@ -96,9 +85,10 @@ def to_table(data, filename):
         for k, v in data.items():
             tablewriter.writerow([k, v['median_time'], v['time_siqr'], v['size'], v['specs'], v['tested_progs'], v['domain'], v['no_cache'], v['no_template']])
 
-collect('sygus_data.json', int(args.times))
+
+collect( 'sygus_data.json', int(args.times), HEURISTIC=str(args.heuristic))
 collect('sygus_template_infer.json', 1, TEMPLATE_INFER='1')
-collect('sygus_no_cache.json', 1, NO_CACHE='1')
+collect( 'sygus_no_cache.json', 1, NO_CACHE='1')
 
 with open('sygus_data.json', 'r') as f:
     base = json.load(f)

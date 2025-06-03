@@ -56,7 +56,7 @@ random.shuffle(smallbenches)
 def pprint_color(obj):
     print(highlight(obj, PythonLexer(), TerminalFormatter()))
 
-def run_benchmarks(benches, ignore_list):
+def run_benchmarks(benches, ignore_list, heuristic):
   skips = []
   results = {}
   for bench in benches:
@@ -74,6 +74,7 @@ def run_benchmarks(benches, ignore_list):
         data['action'] = 'start'
         env = os.environ
         env['RUBYOPT'] = '-W0'
+        env['HEURISTIC'] = heuristic
 
         # run Absynthe as a child process
         proc = subprocess.Popen(['bundle', 'exec', 'bin/autopandas'],
@@ -113,4 +114,4 @@ def run_benchmarks(benches, ignore_list):
   return (results, skips)
 
 if __name__ == '__main__':
-  run_benchmarks(benches, [])
+  run_benchmarks(benches, [], "window5")

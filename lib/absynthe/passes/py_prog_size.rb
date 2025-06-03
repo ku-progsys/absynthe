@@ -6,6 +6,7 @@ class PyProgSizePass < ::AST::Processor
   attr_reader :size
 
   def self.prog_size(node)
+
     visitor = PyProgSizePass.new
     visitor.process(node)
     visitor.size

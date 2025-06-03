@@ -15,6 +15,13 @@ parser.add_argument('--times', '-t', dest='times', action='store',
 parser.add_argument('--smallbench', dest='benchtype', action='store_const',
                     const='smallbench', default='bench',
                     help='use the small benchmark suite for data collection')
+parser.add_argument(
+    '--heuristic',
+    type=str,
+    choices=['size', 'global', 'window3', 'window5', 'window7'],
+    default='window5',
+    help='Choose one of the following options: window5 (default), global, window3, window5, window7.'
+)
 
 args = parser.parse_args()
 
@@ -60,9 +67,9 @@ def collect(output_file, times, **opts):
     merged = None
     for i in range(times):
         if str(args.benchtype) == 'smallbench':
-            data, skips = run_benchmarks(smallbenches, IGNORE_LIST)
+            data, skips = run_benchmarks(smallbenches, IGNORE_LIST, args.heuristic)
         else:
-            data, skips = run_benchmarks(benches, IGNORE_LIST)
+            data, skips = run_benchmarks(benches, IGNORE_LIST, args.heuristic)
         IGNORE_LIST.extend(skips)
         if merged is None:
             merged = data
