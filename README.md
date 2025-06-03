@@ -17,16 +17,6 @@ Absynthe can also be installed on a local system outside the artifact environmen
 
 This will produce a working setup for Absynthe on a local system. All commands to reproduce Absynthe results should work.
 
-## Getting started
-
-You can try to play with the implementation of Absynthe, the purpose of some of the key modules are given in the file structure section above.
-
-You can add/modify a benchmark for SyGuS by adding a new `sl` file to `sygus-strings` folder. You can use existing benchmarks as an example to help you write your own benchmark. You may have to add/update the benchmark abstract specification in `test/sygus_bench.rb` file. To run the benchmark suite you can use the command: `bundle exec rake bench`. We explain how to write abstract specifications in the following section.
-
-Similarly for the AutoPandas benchmark suite you can add/modify a new benchmark in the `autopandas/benchmarks.py` file. If you added a new benchmark, you'll need to add the file to the `benches` list in `autopandas/harness.py`. To run the Autopandas benchmark suite using Absynthe, use the command: `python3 harness.py` in the `autopandas` directory.
-
-To use Absynthe on a different benchmark suite, you'll need to define your own abstract domain and semantics using the Absynthe framework and build a synthesizer from it's API. Sample definitions of abstract domains and semantics are given in the `lib/python` or `lib/sygus` folders. The file `bin/autopandas` defines a self-contained synthesizer using the Absynthe API functions. Lines 10-61 contain the type signatures of the Pandas API methods, and the lines after contain the definition of the synthesizer. This file can be adapted to target to a new domain. We are planning to explore a better API design for enabling easier development of synthesis tools with the core Absynthe framework in the future.
-
 ### Reproducing Tables and Figures in Paper
 
 To reproduce all of the tables in the all commands must be executed after navigating to the absynthe/scripts folder with the command
@@ -93,8 +83,6 @@ Effects_of_Window_Size_Sygus_Benchmarks: Fig2a
 
 
 again, all commands in this section are to be run while your current working directory is absynthe/scripts
-
-
 
 ## Code documentation
 
