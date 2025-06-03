@@ -14,6 +14,8 @@ class Context
     @score =case heuristic
             when "window5" 
               Proc.new { |prog| SygusWindowEntropyScore.prog_size(prog, 5) } 
+            when "ent_nodoms"
+              Proc.new { |prog| SygusWindowEntropyScore.prog_size(prog, 5) } 
             when "window3"
               Proc.new { |prog| SygusWindowEntropyScore.prog_size(prog, 3) }
             when "window7"
@@ -22,11 +24,8 @@ class Context
               Proc.new { |prog| SygusGlobalEntropyScore.prog_size(prog) }
             when "size"
               Proc.new { |prog| ProgSizePass.prog_size(prog) }
-            when "ent_nodoms"
-              Proc.new { |prog| SygusWindowNoDoms.prog_size(prog) }
             when "autopandas"
-              Proc.new { |prog| PythonWindowEntropyScore.prog_size(prog) }
-            
+              Proc.new { |prog| SygusWindowEntropyScore.prog_size(prog) }
             end
 
 

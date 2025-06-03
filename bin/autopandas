@@ -186,14 +186,32 @@ def syn_start(data)
 
   tyargs = fnty.args.map { |ty| PyType.val(ty) }
 
-  # The abstract environment maps variable names to product of their types and their column label sets
-  abs_env = tyargs.zip(col_in).each_with_index.map { |arg, i|
-      ["arg#{i}".to_sym, ProductDomain.val(arg[0], arg[1])]
+  if heuristic == "ent_nodoms"
+    abs_env = tyargs.zip(col_in).each_with_index.map { |arg, i|
+      ["arg#{i}".to_sym, ProductDomain.val(PyType.top, PandasCols.top)]
     }.to_h
+
+  else
+
+    abs_env = tyargs.zip(col_in).each_with_index.map { |arg, i|
+        ["arg#{i}".to_sym, ProductDomain.val(arg[0], arg[1])]
+      }.to_h
+
+  end
+
   # abs_env = tyargs.each_with_index.map { |arg, i| ["arg#{i}".to_sym, arg]}.to_h
-  ctx = Context.new(abs_env, ProductDomain.val(PyType.val(fnty.ret), col_out), "autopandas")
   # ctx = Context.new(abs_env, PyType.val(fnty.ret))
+
+  if heuristic == "ent_nodoms"
+
+    ctx = Context.new(abs_env, ProductDomain.val(PyType.top, PandasCols.top), "autopandas")
+  else  
+    ctx = Context.new(abs_env, ProductDomain.val(PyType.val(fnty.ret), col_out), "autopandas")
+
+  end
+
   ctx.lang = :py
+
   ctx.domain = ProductDomain
   # ctx.domain = PyType
 
