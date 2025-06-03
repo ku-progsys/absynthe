@@ -24,13 +24,18 @@ def main():
 
     pandadomlgnd = ["Doms. Enabled" , "Doms. Disabled"]
 
-
-    PlotLinesDomain.plotLines(pandawindocomp, pandawinlgnd, "Effects of Window Size panda Benchmarks")
-
-    PlotLinesDomain.plotLines(pandadomain, pandadomlgnd, "Effects of Domains on panda Benchmarks")
-
-    tablePandasResults.tablePandasResults(files["window5"], files["noentropy"])
-
+    try: 
+        PlotLinesDomain.plotLines(pandawindocomp, pandawinlgnd, "Effects of Window Size panda Benchmarks")
+    except: 
+        print("Error: Could Not Make Size Comparison Chart")
+    try: 
+        PlotLinesDomain.plotLines(pandadomain, pandadomlgnd, "Effects of Domains on panda Benchmarks")
+    except: 
+        print("Error: Could Not Make Domain Comparison Chart")
+    try: 
+        tablePandasResults.tablePandasResults(files["window5"], files["noentropy"])
+    except: 
+        print("Error: Could Not Make Table")
     
 
 if __name__ == "__main__": 

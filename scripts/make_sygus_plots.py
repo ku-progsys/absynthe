@@ -24,13 +24,20 @@ def main():
 
     sygdomlgnd = ["Doms. Enabled" , "Doms. Disabled"]
 
+    try:
+        PlotLinesDomain.plotLines(sygwindocomp, sygwinlgnd, "Effects of Window Size Sygus Benchmarks")
+    except:
+        print("Error: Could Not Make Size Comparison Chart")
+        
+    try:
+        PlotLinesDomain.plotLines(sygdomain, sygdomlgnd, "Effects of Domains on Sygus Benchmarks")
+    except:
+        print("Error: Could Not Make Domain Comparison Chart")
 
-    PlotLinesDomain.plotLines(sygwindocomp, sygwinlgnd, "Effects of Window Size Sygus Benchmarks")
-
-    PlotLinesDomain.plotLines(sygdomain, sygdomlgnd, "Effects of Domains on Sygus Benchmarks")
-
-    tableSyGusResults.tableSygusResults(files["window5"], files["noentropy"])
-
+    try:
+        tableSyGusResults.tableSygusResults(files["window5"], files["noentropy"])
+    except:
+        print("Error: Could Not Make Table")
     
 
 if __name__ == "__main__": 
