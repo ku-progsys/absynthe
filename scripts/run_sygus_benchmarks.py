@@ -18,9 +18,9 @@ parser.add_argument('--smallbench', dest='benchtype', action='store_const',
 parser.add_argument(
     '--heuristic',
     type=str,
-    choices=['size', 'global', 'window3', 'window5', 'window7'],
+    choices=['size', 'global', 'window3', 'window5', 'window7', 'ent_nodoms'],
     default='window5',
-    help='Choose one of the following options: window5 (default), global, window3, window5, window7.'
+    help='Choose one of the following options: window5 (default), global, window3, window5, window7, ent_nodoms.'
 )
 
 args = parser.parse_args()
@@ -86,9 +86,9 @@ def to_table(data, filename):
             tablewriter.writerow([k, v['median_time'], v['time_siqr'], v['size'], v['specs'], v['tested_progs'], v['domain'], v['no_cache'], v['no_template']])
 
 
-collect( 'sygus_data.json', int(args.times), HEURISTIC=str(args.heuristic))
-collect('sygus_template_infer.json', 1, TEMPLATE_INFER='1')
-collect( 'sygus_no_cache.json', 1, NO_CACHE='1')
+collect( 'sygus_data.json', int(args.times), HEURISTIC = str(args.heuristic))
+collect('sygus_template_infer.json', 1, TEMPLATE_INFER='1', HEURISTIC = str(args.heuristic) )
+collect( 'sygus_no_cache.json', 1, NO_CACHE='1', HEURISTIC = str(args.heuristic))
 
 with open('sygus_data.json', 'r') as f:
     base = json.load(f)

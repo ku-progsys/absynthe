@@ -15,7 +15,8 @@ args = parser.parse_args()
 
 data = {}
 
-for argto in [ "global", "window3", "window5","window7"]: 
+for argto in [ "size", "global", "window3", "window5","window7", "ent_nodoms"]: 
+
     if args.benchtype == 'smallbench':
         subprocess.run([sys.executable, "run_sygus_benchmarks.py", f"--heuristic={argto}", f"--times={str(args.times)}", f"--smallbench"])
     else:

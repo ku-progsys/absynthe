@@ -18,9 +18,9 @@ parser.add_argument('--smallbench', dest='benchtype', action='store_const',
 parser.add_argument(
     '--heuristic',
     type=str,
-    choices=['size', 'global', 'window3', 'window5', 'window7'],
+    choices=['size', 'global', 'window3', 'window5', 'window7', 'ent_nodoms'],
     default='window5',
-    help='Choose one of the following options: window5 (default), global, window3, window5, window7.'
+    help='Choose one of the following options: window5 (default), global, window3, window5, window7, ent_nodoms.'
 )
 
 args = parser.parse_args()

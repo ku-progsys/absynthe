@@ -208,6 +208,8 @@ def syn_start(data)
       Proc.new { |prog| PythonWindowEntropyScore.prog_size(prog, 5)}
     when  "window7" 
       Proc.new { |prog| PythonWindowEntropyScore.prog_size(prog, 7)}
+    when  "ent_nodoms"
+      Proc.new { |prog| PythonWindowNoDoms.prog_size(prog)}
   end
 
 

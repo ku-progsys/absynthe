@@ -10,20 +10,23 @@ class Context
     @lang = :sygus
     @goal = goal
     @cache = {}
-    puts "CALLED with #{heuristic}"
+
     @score =case heuristic
             when "window5" 
               Proc.new { |prog| SygusWindowEntropyScore.prog_size(prog, 5) } 
             when "window3"
               Proc.new { |prog| SygusWindowEntropyScore.prog_size(prog, 3) }
-            when "window9"
+            when "window7"
               Proc.new { |prog| SygusWindowEntropyScore.prog_size(prog, 9) } 
             when "global"
               Proc.new { |prog| SygusGlobalEntropyScore.prog_size(prog) }
             when "size"
-              Proc.new { |prog| WeightedSizePass.prog_size(prog) }
+              Proc.new { |prog| ProgSizePass.prog_size(prog) }
+            when "ent_nodoms"
+              Proc.new { |prog| SygusWindowNoDoms.prog_size(prog) }
             when "autopandas"
               Proc.new { |prog| PythonWindowEntropyScore.prog_size(prog) }
+            
             end
 
 

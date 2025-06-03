@@ -18,9 +18,9 @@ reporters << SynthesisStatsReporter.new('test_log.json')
 Minitest::Reporters.use! reporters
 
 module SygusTestRunner
-  def run_sygus_test(src, abs_env = nil, target_abs = nil, heuristic: "5")
-
+  def run_sygus_test(src, abs_env = nil, target_abs = nil)
     test_name = File.basename(src, '.sl').gsub('-', '_')
+
     define_method("test_#{test_name}") do
       # skip unless test_name == "dr_name"
 
@@ -41,8 +41,8 @@ module SygusTestRunner
         else
           Instrumentation.domain = target_abs.class.to_s
         end
-
-        ctx = Context.new(abs_env, target_abs, heuristic)
+        
+        ctx = Context.new(abs_env, target_abs, ENV["HEURISTIC"].to_s)
         Globals.root_vars = ctx.init_env.values.filter { |v| v.var? }
 
         ctx.cache = Cache.populate_sygus(ctx, lang) unless ENV['NO_CACHE']
