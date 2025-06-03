@@ -22,7 +22,7 @@ for argto in [ "size", "global", "window3", "window5","window7", "ent_nodoms"]:
     else:
         subprocess.run([sys.executable, "run_sygus_benchmarks.py", f"--heuristic={argto}", f"--times={str(args.times)}"])
 
-    os.rename("table1.csv", f"sygus_{argto}.csv")
+    os.rename("table1.csv", f"./Results/sygus_{argto}.csv")
     os.rename("../test_log.json", f"../sygus_{argto}test_log.json")
 
 

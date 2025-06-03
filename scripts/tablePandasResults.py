@@ -140,8 +140,8 @@ def tablePandasResults(entropycsv: str, noentcsv: str):
                 continue
 
     # Save the rendered table directly as a PDF.
-    plt.title("Comparison Absynth vs AbsEnt", fontsize=14, fontweight="bold")
+    plt.title("Autopandas Comparison Absynth vs AbsEnt", fontsize=14, fontweight="bold")
 
-    plt.savefig("PandasCompare.pdf", bbox_inches="tight")
+    plt.savefig("./Plots/pandas_ent_vs_baseline_table.pdf", bbox_inches="tight")
     plt.close()
 

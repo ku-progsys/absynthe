@@ -21,7 +21,7 @@ for argto in ["size", "global", "window3", "window5","window7", "ent_nodoms"]:
     else:
         subprocess.run([sys.executable, "run_autopandas_benchmarks.py", f"--heuristic={argto}", f"--times={str(args.times)}"])
 
-    os.rename("table2.csv", f"pandas_{argto}.csv")
+    os.rename("table2.csv", f"./Results/pandas_{argto}.csv")
     if os.path.exists("./autopandas_data.json"):
         os.rename("./autopandas_data.json", f"./autopandas_data_{argto}.json")
 

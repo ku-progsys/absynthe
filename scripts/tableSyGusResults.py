@@ -147,7 +147,7 @@ def tableSygusResults(entcsv: str, noent: str):
     # Save the rendered table directly as a PDF.
     plt.title("Sygus Comparison of Absynth and AbsEnt", fontsize=14, fontweight="bold")
 
-    plt.savefig("SyGusCompare.pdf", bbox_inches="tight")
+    plt.savefig("./Plots/sygus_ent_vs_baseline_table.pdf", bbox_inches="tight")
     plt.close()
 
 

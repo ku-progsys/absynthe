@@ -13,7 +13,7 @@ def plotLines(files: list[str], legend: list[str], title):
 
     # Create a figure
     plt.figure(figsize=(10, 6))
-
+    ticks = 0
     for i, csv_file in enumerate(csv_files):
         try:
             # Read csv file assuming the first row contains headers.
@@ -39,7 +39,7 @@ def plotLines(files: list[str], legend: list[str], title):
 
         # Plot while assigning each file a different color.
         plt.plot(x, y, marker='o', label=legend[i], color=colors(i))
-        
+
         # Immediately after plotting with plt.plot(), add whiskers for the endpoint.
         # Ensure that you've already converted "Time SIQR (s)" to numeric:
         #   df["Time SIQR (s)"] = pd.to_numeric(df["Time SIQR (s)"], errors="coerce")
@@ -48,17 +48,21 @@ def plotLines(files: list[str], legend: list[str], title):
             siqr_val = float(siqr_val)
             plt.errorbar(x[-1], y[-1], yerr=siqr_val, fmt='none', color=colors(i),
                 capsize=5, elinewidth=1.5)
+            
+        ticks = max(ticks,int(len(x)))
+    plt.xticks(range(0, ticks)) 
 
     # Configure the plot.
     plt.xlabel("# Progs Found")
     plt.ylabel("Time Median(s)")
-    plt.title(title)
-    plt.legend(title="Legend")
+    plt.legend(bbox_to_anchor=(.2, 1), loc=1)
+    
+    #plt.legend(title="Legend")
     plt.grid(True)
     plt.tight_layout()
 
     # Display the plot.
-    plt.savefig(f"{title}.pdf", bbox_inches="tight")
+    plt.savefig(f"./Plots/{title.replace(' ', '_')}.pdf", bbox_inches="tight")
     plt.close()
 
 
